@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sri Sri Sri Pentlamma Ammavaru Temple</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Font Awesome (icons as images) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root{
+  --primary:#7b0000;
+  --secondary:#ffcc80;
+  --bg:#ffdeb9;
+  --text:#333;
+  --card:#fff;
+
+} 
+body{
+  margin:0;
+  font-family:Poppins, sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  transition: all 0.3s ease;
+  text-align: center;
+            
+}
+/* DARK MODE */
+body.dark{
+  --bg:#1c1c1c;
+  --text:#eee;
+  --card:#2c2c2c;
+  --primary:#ff9800;
+  --secondary:#ffc107;
+}
+/* HEADER */
+header{
+  position:sticky;
+  top:0;
+  background:var(--primary);
+  color:#fff;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  padding:10px 20px;
+  z-index:1000;
+  box-shadow:0 4px 6px rgba(0,0,0,0.2);
+}
+header h3{
+  margin:0;
+  font-size:22px;
+  font-weight:700;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+header h3 img{
+  height:50px;
+  border-radius:50%;
+}
+nav{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+}
+nav a, nav button{
+  color:#fff;
+  text-decoration:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:6px 6px;
+  border-radius:20px;
+  font-weight:600;
+  font-size:14px;
+  transition:0.3s;
+}
+nav a:hover, nav button:hover{
+  background:var(--secondary);
+  color:#000;
+}
+/* HERO */
+.hero{
+  height:70vh;
+  width:90%;
+  background:linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+  url('file:///C:/Users/madhu/Desktop/TEMPLE/images/main.png') center/cover no-repeat;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  padding:80px;
+}
+.hero h1{
+  font-size:40px;
+  font-weight:700;
+  margin-bottom:300px;
+  text-shadow:2px 2px 10px rgba(0,0,0,0.7);
+}
+.hero p{
+  font-size:15px;
+  padding:30px 10px;
+  font-weight:600;
+ 
+ 
+}
+/* SECTIONS */
+.section{
+  padding:20px 10px;
+  max-width:1250px;
+  margin:auto;
+}
+.section h2{
+  text-align:center;
+  color:var(--primary);
+  font-size:25px;
+  margin-bottom:10px;
+  
+  
+  
+}
+/* GRID CARDS */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:25px;
+}
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 8px 20px rgba(0,0,0,0.1);
+  transition:0.3s;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+body.dark .card{
+  background:var(--card);
+  color:#fff;
+}
+/* REMOVE BUTTON IN POOJA */
+.remove-btn{
+  position:absolute;
+  top:10px;
+  right:10px;
+  background:red;
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:25px;
+  height:25px;
+  cursor:pointer;
+  font-weight:bold;
+}
+/* SLIDER */
+.slider{
+  position:relative;
+  border-radius:16px;
+  overflow:hidden;
+}
+.slides{
+  display:flex;
+  transition:0.6s ease;
+}
+.slides img{
+  width:50%;
+  flex-shrink:0;
+  height:400px;
+  object-fit:cover;
+}
+.slider-btn{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(0,0,0,0.5);
+  color:#fff;
+  border:none;
+  font-size:28px;
+  padding:6px 12px;
+  cursor:pointer;
+  border-radius:50%;
+}
+.prev{left:10px;}
+.next{right:10px;}
+/* VIDEO */
+.video-grid iframe{
+  width:100%;
+  height:150px;
+  border-radius:12px;
+}
+/* DONATION */
+.donate{
+  background:linear-gradient(135deg,#7b0000,#b00000);
+  color:#ff5f;
+  border-radius:20px;
+  padding:10px 10px;
+  text-align:center;
+
+}
+/* ADDRESS & MAP */
+.map-address{
+  display:flex;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.map-address .card{
+  flex:1 1 400px;
+}
+.map-container iframe{
+  width:100%;
+  height:150px;
+  border-radius:12px;
+}
+/* FORM */
+input,select{
+  width:100%;
+  padding:12px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  margin:8px 0;
+}
+button.primary{
+  background:var(--primary);
+  color:#fff;
+  border:none;
+  padding:12px;
+  border-radius:25px;
+  cursor:pointer;
+  font-size:15px;
+}
+button.primary:hover{
+  background:var(--secondary);
+  color:#000;
+}
+/* FOOTER */
+footer{
+  background:var(--primary);
+  color:#fff;
+  text-align:center;
+  height:75px;
+  padding:10px;
+}
+/* RESPONSIVE */
+@media(max-width:768px){
+  .hero h1{font-size:36px;}
+  nav{justify-content:center;}
+}
+
+
+.slider1 {
+    width: 100%;
+    overflow: hidden;
+}
+
+.slider-track {
+    display: flex;
+    animation: scroll 20s linear infinite;
+}
+
+.slider-track img {
+    width: 150px;
+    height: 150px;
+    margin: 0 10px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid white;
+}
+
+/* Auto scroll animation */
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+
+/* social */
+
+
+        .social a {
+            display: inline-block;
+            margin: 15px;
+            font-size: 100px;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .social a:hover {
+            transform: scale(1.2);
+        }
+
+        .whatsapp { color: #25D366; }
+        .instagram { color: #E1306C; }
+        .youtube { color: #FF0000; }
+
+</style>
+</head>
+<body>
+
+<header>
+  <h3><img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/LOGO.JPEG" alt="Temple Logo">Sri Sri Sri Pentlamma Ammavaru</h3>
+  <div class="menu-icon" onclick="toggleNav()">☰</div>
+  <nav id="mainNav">
+    <a href="#gallery">Gallery</a>
+    <a href="#pooja">Poojas</a>
+    <a href="#booking">Booking</a>
+    <a href="#donation">Donate</a>
+    <a href="#live">Live</a>
+    <button class="lang-btn" onclick="toggleLang()">EN / తెలుగు</button>
+    <button class="dark-btn" onclick="toggleDark()">🌙 Dark Mode</button>
+    <button id="audioBtn" onclick="toggleAudio()">🔊 Play Music</button>
+    <button id="muteBtn" onclick="toggleMute()">🔈 Mute</button>
+    <button id="logoutBtn" onclick="logout()" style="display:none;">Logout</button>
+  </nav>
+</header>
+
+<audio id="templeAudio" loop>
+  <source src="file:///C:/Users/madhu/Desktop/TEMPLE/Ringtone1.mp3" type="audio/mpeg">
+</audio>
+
+<section class="hero">
+  <h1 id="heroTitle">Welcome to Sri Sri Sri Pentlamma Ammavaru Temple</h1>
+  <p id="heroSub">🛕 శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు ఆలయం – పరిచయం
+
+శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు దేవాలయం కస్పా-పెంటపాడు గ్రామం, పెంటపాడు మండలం, పశ్చిమ గోదావరి జిల్లా, ఆంధ్రప్రదేశ్‌లో చెంది ఉంది. ఈ ఆలయం గ్రామ దేవత 
+ఆలయంగా పురాతన కాలం నుండి స్థానిక ప్రజల భక్తి-విశ్వాసాలకు కేంద్రంగా నిలిచింది.
+
+గ్రామ ప్రజలు అమ్మవారిని తమ రక్షక మాతగా, క్షేమదాయక శక్తిగా భావిస్తూ నిత్యం పూజలు నిర్వహిస్తారు. ప్రతి నెలా పౌర్ణమి రోజున ప్రత్యేక పూజలు, ఉత్సవాలు ఘనంగా జరుగుతాయి. 
+ఈ సందర్భాలలో భక్తులు పెద్ద సంఖ్యలో వచ్చి అమ్మవారికి సేవలు అర్పిస్తారు.
+
+📌 గ్రామ పరిరక్షక దేవతగా అమ్మవారు
+
+కస్పా-పెంటపాడు గ్రామ వాసుల దృష్టిలో పెంట్లమ్మ అమ్మవారు గ్రామాన్ని కాపాడే పరిరక్షక దేవత. గ్రామంలో ఏ కష్టకాలం వచ్చినా ముందుగా అమ్మవారిని ప్రార్థించడం ఇక్కడి సంప్రదాయం.
+
+📌 పూజా విధానం
+
+రోజువారీ పూజలు, అర్చనలు భక్తుల అవసరాలను అనుసరించి నిర్వహిస్తారు.
+
+పౌర్ణమి రోజున ప్రత్యేక పూజలు, ధ్యానాలు, నైవేద్య సమర్పణలు ఘనంగా జరుగుతాయి.
+
+📌 భక్తుల విశ్వాసం
+
+భక్తులు ఆరోగ్యం, కుటుంబ శాంతి, సంతాన ప్రాప్తి, కష్ట నివారణ వంటి సంకల్పాలతో అమ్మవారిని ప్రార్థిస్తారు. అమ్మవారి కృప వల్ల తమ కోరికలు నెరవేరుతాయని గాఢమైన నమ్మకం ఉంది.
+
+📌 కమిటీ
+
+శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు దేవస్థానం సంవత్సరం 2023లో గ్రామ పెద్దలు, భక్తుల సహకారంతో 15 మంది సభ్యులతో కూడిన ఆలయ కమిటీ ఏర్పాటు చేయబడింది.
+
+ఈ కమిటీ ఏర్పాటైన తరువాత, అమ్మవారి కృపతో మరియు గ్రామ ప్రజల సహాయంతో ఆలయంలో అనేక అభివృద్ధి కార్యక్రమాలు ప్రారంభమయ్యాయి.
+
+ఆలయ సుందరీకరణ, పూజా విధానాలలో శ్రద్ధ, భక్తులకు అవసరమైన సౌకర్యాల కల్పన వంటి పలువురు అభివృద్ధి పనులు సక్రమంగా అమలులోకి వచ్చాయి.
+
+ఈ కమిటీ ఏర్పాటు తరువాత ఆలయ అభివృద్ధి విశేషంగా, వేగంగా జరగడం అమ్మవారి ఆశీస్సుల ఫలితంగా భక్తులు హృదయపూర్వకంగా విశ్వసిస్తున్నారు.
+
+📍 ఆలయానికి చేరుకునే మార్గం
+
+ప్రాంతం: కస్పా-పెంటపాడు, పెంటపాడు మండలం, పశ్చిమ గోదావరి జిల్లా
+
+తాడేపల్లిగూడం మరియు పరిసర ప్రాంతాల నుండి రోడ్డు మార్గం ద్వారా సులభంగా చేరుకోవచ్చు.
+
+సమీప రైల్వే స్టేషన్: తాడేపల్లిగూడం</p>
+</section>
+
+<section class="section" id="gallery">
+  <h2 id="galleryTitle">📸 Temple Gallery</h2>
+  <div class="slider">
+    <div class="slides" id="slides">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/18.jpg">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/44.jpeg">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/1.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/4.jpeg">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/25.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/15.jpeg">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/22.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/66.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/2.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/10.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/19.jpeg">
+	  
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p1.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p2.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p3.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p4.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p5.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/p6.jpeg">
+	 
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/a1.jpeg">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/a2.jpeg">
+      <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/a3.jpeg">
+    </div>
+    <button class="slider-btn prev" onclick="moveSlide(-1)">❮</button>
+    <button class="slider-btn next" onclick="moveSlide(1)">❯</button>
+  </div>
+</section>
+
+
+
+<!-- circleCLE IMAGE SLIDER -->
+
+<section class="section" id="gallery">
+  <h2 id="commitTitle">📸 Commit Gallery</h2>
+
+<div class="slider1">
+    <div class="slider-track">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC1.jpeg">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC2.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC3.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC4.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC5.jpeg">
+		
+
+        <!-- Duplicate for infinite scroll -->
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC21.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC20.jpeg">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC6.jpeg">
+
+    </div>
+</div>
+
+
+<div class="slider1">
+    <div class="slider-track">
+	<!-- Duplicate for infinite scroll -->
+	<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC7.jpeg">
+	    <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC8.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC22.jpeg">
+	    <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC9.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC10.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC13.jpeg">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC11.jpeg">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC12.jpeg">
+
+    </div>
+	
+	<div class="slider2">
+    <div class="slider-track">
+	<!-- Duplicate for infinite scroll -->
+	 <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC14.jpeg"> 
+	<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC15.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC16.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC17.jpeg">
+		<img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC19.jpeg">
+        <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/CC18.jpeg">
+	    </div>	
+		
+    </div>
+</div>
+
+<section class="section">
+  <h2 id="videoTitle">🎥 Video Gallery</h2>
+  <div class="grid video-grid">
+    <div class="video-wrapper">
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/coBb7g7Yv8c?si=A0A7WmBfRn_qSiGV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+	 encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> </div>
+    <div class="video-wrapper">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/CmPbzjSIrpY?si=UWtLGEVbtlvM7kIc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+	  gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>  </div>
+    <div class="video-wrapper">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/HM5ohg57uXQ?si=Lcdbs1qUz2hReIcE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+	  gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>  </div>
+    <div class="video-wrapper">
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/i6ooGixHBxc?si=GCXFM5RmGd00rwOe" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media;
+	  gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
+    <div class="video-wrapper">
+     <iframe width="560" height="315" src="https://www.youtube.com/embed/t65uQ9B8rkY?si=QCxmv9w0qrDgjKs6" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+	 gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  </div>
+ 
+  
+ 
+</section>
+
+<section class="section" id="pooja">
+  <h2 id="poojaTitle">📆 Daily Pooja Schedule</h2>
+  <div class="grid" id="poojaList"></div>
+  <div id="adminPanel" style="display:none; margin-top:30px;">
+    <input id="poojaInput" placeholder="Pooja name & time">
+    <button class="primary" onclick="addPooja()">Add Pooja</button>
+  </div>
+</section>
+
+<section class="section" id="booking">
+  <h2 id="bookingTitle">🎫 Seva Booking</h2>  
+  <div class="card">
+    <input id="name" placeholder="Your Name">
+    <select id="seva">
+      <option>Kumkuma Archana</option>
+      <option>Archana</option>
+      <option>Special Pooja</option>
+    </select>
+    <input type="date" id="date">
+    <button class="primary" onclick="bookSeva()">Book Seva</button>
+  </div>
+</section>
+
+<section class="section" id="adminBookings" style="display:none;">
+  <h2>📋 Seva Bookings (Admin)</h2>
+  <div class="grid" id="bookingList"></div>
+  <br>
+  <button class="primary" onclick="downloadPDF()">⬇ Download PDF</button>
+</section>
+
+<section class="section" id="donation">
+  <div class="donate">
+    <h2 style="color:#fff" id="donateTitle">🙏 QR Code Donation</h2>
+    <div class="grid">
+    <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/qr.jpeg" width="150">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/b1.jpeg" width="150">
+	  <img src="file:///C:/Users/madhu/Desktop/TEMPLE/images/b2.jpeg" width="150">
+      <div>
+        <p><b>UPI:</b> temple@upi</p>
+		
+		
+		<div>
+		<a style="color:#fff" href="https://wa.me/9951183627" target="_blank" class="whatsapp">  WhatsApp Support
+            <i class="fab fa-whatsapp"></i> 
+        </a>
+        </div>
+       <div>
+        <a style="color:#fff" href="https://www.instagram.com/pentlamatalitemple_k.pentapadu?igsh=MWxqMDV6MHByOG1lZw%3D%3D&utm_source=qr" target="_blank" class="instagram"> Instagram Support
+            <i class="fab fa-instagram"></i>
+        </a>
+		</div>
+		<div>
+
+        <a style="color:#fff" href="https://www.youtube.com/@pentlammatallicomiti2023" target="_blank" class="youtube"> Youtube Support
+            <i class="fab fa-youtube"></i>
+        </a>
+		</div>
+		
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="address">
+  <h2 id="addressTitle">📍 Temple Address</h2>
+  <div class="map-address">
+    <div class="card">
+      <p>Sri Sri Sri Pentlamma Ammavaru<br>Kaspa.Pentapadu Village , Pentapadu Mandal , West Godavari , AndhraPradesh - 534166</p>
+	  
+	  
+	  <p>📍 ఆలయానికి చేరుకునే మార్గం
+
+ప్రాంతం: కస్పా-పెంటపాడు, పెంటపాడు మండలం, పశ్చిమ గోదావరి జిల్లా
+
+తాడేపల్లిగూడం మరియు పరిసర ప్రాంతాల నుండి రోడ్డు మార్గం ద్వారా సులభంగా చేరుకోవచ్చు.
+
+సమీప రైల్వే స్టేషన్: తాడేపల్లిగూడం</p>
+	  
+    </div>
+    <div class="map-container card">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1160.0122803029424!2d81.51619268354347!3d16.7718887600723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37b5235c738925%3A0x55b23b72c5371a05!2sKaspapentapadu!5e0!3m2!1sen!2sin!4v1768298527950!5m2!1sen!2sin" 
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="live">
+  <h2 id="liveTitle">🎥 Live Darshan</h2>
+  <div class="video-wrapper">
+    <iframe width="560" height="315" src="https://www.youtube.com/@pentlammatallicomiti2023" title="YouTube video player" frameborder="0" allow="accelerometer; 
+	autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe> </div>
+</section>
+
+ 
+
+<footer>
+  <p>© 2023 Sri Sri Sri Pentlamma Ammavaru Temple , Kaspa.Pentapadu , Pentapadu Mandal , West Godavari , AndhraPradesh</p>
+  <p><a href="#" onclick="adminLogin()" id="adminLink" style="color:var(--secondary)">Admin Login</a></p>
+</footer>
+
+
+
+<script>
+/* SLIDER */
+let index=0;
+function moveSlide(step){
+  const slides=document.getElementById("slides");
+  index=(index+step+10)%10;
+  slides.style.transform=`translateX(-${index*100}%)`;
+}
+setInterval(()=>moveSlide(1),5000);
+
+/* HAMBURGER MENU */
+function toggleNav(){
+  document.getElementById("mainNav").classList.toggle("active");
+}
+
+/* POOJA */
+let poojas=JSON.parse(localStorage.getItem("poojas"))||[
+  "Suprabhatam – 5:30 AM",
+  "Abhishekam – 6:00 AM",
+  "Archana – 9:00 AM"
+];
+
+function renderPoojas(){
+  const isAdmin = localStorage.getItem("admin")==="true";
+  if(isAdmin){
+    document.getElementById("adminPanel").style.display="block";
+    document.getElementById("logoutBtn").style.display="inline";
+  }
+  document.getElementById("poojaList").innerHTML="";
+  poojas.forEach((p,i)=>{
+    let d=document.createElement("div");
+    d.className="card";
+    d.innerText=p;
+    if(isAdmin){
+      let removeBtn=document.createElement("button");
+      removeBtn.innerText="×";
+      removeBtn.className="remove-btn";
+      removeBtn.onclick=()=>removePooja(i);
+      d.appendChild(removeBtn);
+    }
+    document.getElementById("poojaList").appendChild(d);
+  });
+}
+
+function addPooja(){
+  if(document.getElementById("poojaInput").value.trim()==="") return;
+  poojas.unshift(document.getElementById("poojaInput").value);
+  localStorage.setItem("poojas",JSON.stringify(poojas));
+  document.getElementById("poojaInput").value="";
+  renderPoojas();
+}
+
+function removePooja(index){
+  poojas.splice(index,1);
+  localStorage.setItem("poojas",JSON.stringify(poojas));
+  renderPoojas();
+}
+
+renderPoojas();
+
+/* BOOKING */
+let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+function bookSeva(){
+  let name = document.getElementById("name").value.trim();
+  let seva = document.getElementById("seva").value;
+  let date = document.getElementById("date").value;
+
+  if(!name || !date){
+    alert("Please fill all details");
+    return;
+  }
+
+  bookings.push({name,seva,date});
+  localStorage.setItem("bookings",JSON.stringify(bookings));
+
+  alert("Seva booked successfully!");
+  document.getElementById("name").value="";
+  document.getElementById("date").value="";
+}
+
+/* ADMIN VIEW */
+function renderBookings(){
+  document.getElementById("bookingList").innerHTML="";
+  bookings.forEach((b,i)=>{
+    let d=document.createElement("div");
+    d.className="card";
+    d.innerHTML=`<b>Name:</b> ${b.name}<br>
+                 <b>Seva:</b> ${b.seva}<br>
+                 <b>Date:</b> ${b.date}`;
+    document.getElementById("bookingList").appendChild(d);
+  });
+}
+
+/* PDF DOWNLOAD */
+function downloadPDF(){
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF();
+  pdf.setFontSize(16);
+  pdf.text("Sri Sri Sri Pentlamma Ammavaru Temple - Seva Bookings",10,15);
+
+  let y=30;
+  bookings.forEach((b,i)=>{
+    pdf.setFontSize(12);
+    pdf.text(`${i+1}. ${b.name} | ${b.seva} | ${b.date}`,10,y);
+    y+=10;
+  });
+
+  pdf.save("Seva_Bookings.pdf");
+}
+
+/* LANGUAGE */
+let tel=false;
+function toggleLang(){
+  tel=!tel;
+  document.getElementById("heroTitle").innerText=tel?"శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు ఆలయానికి స్వాగతం":"Welcome to Sri Sri Sri Pentlamma Ammavaru Temple";
+  document.getElementById("galleryTitle").innerText=tel?"📸 ఆలయ గ్యాలరీ":"📸 Temple Gallery";
+  document.getElementById("commitTitle").innerText=tel?"📸  కమిటీ గ్యాలరీ":"📸 Commit Gallery";
+  document.getElementById("videoTitle").innerText=tel?"🎥 వీడియో గ్యాలరీ":"🎥 Video Gallery";
+  document.getElementById("poojaTitle").innerText=tel?"📆 నిత్య పూజలు":"📆 Daily Pooja Schedule";
+  document.getElementById("bookingTitle").innerText=tel?"🎫 సేవ బుకింగ్":"🎫 Seva Booking";
+  document.getElementById("donateTitle").innerText=tel?"🙏 క్యూఆర్ విరాళం":"🙏 QR Code Donation";
+  document.getElementById("liveTitle").innerText=tel?"🎥 ప్రత్యక్ష దర్శనం":"🎥 Live Darshan";
+  document.getElementById("addressTitle").innerText=tel?"📍 ఆలయం చిరునామా":"📍 Temple Address";
+  document.getElementById("adminLink").innerText=tel?"నిర్వాహక లాగిన్":"Admin Login";
+}
+
+/* DARK MODE */
+function toggleDark(){
+  document.body.classList.toggle("dark");
+}
+
+/* AUDIO */
+const audio=document.getElementById("templeAudio");
+const audioBtn=document.getElementById("audioBtn");
+const muteBtn=document.getElementById("muteBtn");
+window.addEventListener('load',()=>{
+  audio.play().catch(()=>{});
+  audioBtn.innerText="🔊 Pause Music";
+});
+function toggleAudio(){
+  if(audio.paused){audio.play(); audioBtn.innerText="🔊 Pause Music";}
+  else{audio.pause(); audioBtn.innerText="🔈 Play Music";}
+}
+function toggleMute(){
+  audio.muted=!audio.muted;
+  muteBtn.innerText=audio.muted?"🔇 Muted":"🔈 Unmute";
+}
+
+/* ADMIN LOGIN */
+function adminLogin(){
+  let u=prompt("Username");
+  let p=prompt("Password");
+  if(u==="admin" && p==="admin123"){
+    localStorage.setItem("admin","true");
+    location.reload();
+  } else {
+    alert("Invalid credentials");
+  }
+}
+function logout(){
+  localStorage.removeItem("admin");
+  location.reload();
+}
+
+/* INIT ADMIN */
+if(localStorage.getItem("admin")==="true"){
+  document.getElementById("adminBookings").style.display="block";
+  document.getElementById("logoutBtn").style.display="inline";
+  renderBookings();
+}
+</script>
+</body>
+</html>
