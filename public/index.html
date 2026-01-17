@@ -7,11 +7,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-<!-- jsPDF -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<!-- Font Awesome (icons as images) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 :root{
@@ -20,7 +18,6 @@
   --bg:#ffdeb9;
   --text:#333;
   --card:#fff;
-
 } 
 body{
   margin:0;
@@ -29,7 +26,6 @@ body{
   color:var(--text);
   transition: all 0.3s ease;
   text-align: center;
-            
 }
 /* DARK MODE */
 body.dark{
@@ -65,6 +61,14 @@ header h3 img{
   height:50px;
   border-radius:50%;
 }
+
+/* MENU ICON (Hidden on Desktop) */
+.menu-icon {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+}
+
 nav{
   display:flex;
   flex-wrap:wrap;
@@ -99,6 +103,7 @@ nav a:hover, nav button:hover{
   text-align:center;
   color:#fff;
   padding:80px;
+  box-sizing: border-box;
 }
 .hero h1{
   font-size:40px;
@@ -110,8 +115,6 @@ nav a:hover, nav button:hover{
   font-size:15px;
   padding:30px 10px;
   font-weight:600;
- 
- 
 }
 /* SECTIONS */
 .section{
@@ -124,9 +127,6 @@ nav a:hover, nav button:hover{
   color:var(--primary);
   font-size:25px;
   margin-bottom:10px;
-  
-  
-  
 }
 /* GRID CARDS */
 .grid{
@@ -207,7 +207,6 @@ body.dark .card{
   border-radius:20px;
   padding:10px 10px;
   text-align:center;
-
 }
 /* ADDRESS & MAP */
 .map-address{
@@ -230,6 +229,7 @@ input,select{
   border-radius:8px;
   border:1px solid #ccc;
   margin:8px 0;
+  box-sizing: border-box;
 }
 button.primary{
   background:var(--primary);
@@ -249,26 +249,17 @@ footer{
   background:var(--primary);
   color:#fff;
   text-align:center;
-  height:75px;
-  padding:10px;
+  height:auto;
+  padding:20px;
 }
-/* RESPONSIVE */
-@media(max-width:768px){
-  .hero h1{font-size:36px;}
-  nav{justify-content:center;}
-}
-
-
 .slider1 {
     width: 100%;
     overflow: hidden;
 }
-
 .slider-track {
     display: flex;
     animation: scroll 20s linear infinite;
 }
-
 .slider-track img {
     width: 150px;
     height: 150px;
@@ -277,7 +268,6 @@ footer{
     object-fit: cover;
     border: 4px solid white;
 }
-
 /* Auto scroll animation */
 @keyframes scroll {
     0% {
@@ -287,26 +277,94 @@ footer{
         transform: translateX(-100%);
     }
 }
-
-
 /* social */
+.social a {
+    display: inline-block;
+    margin: 15px;
+    font-size: 100px;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+.social a:hover {
+    transform: scale(1.2);
+}
+.whatsapp { color: #25D366; }
+.instagram { color: #E1306C; }
+.youtube { color: #FF0000; }
 
+/* ---------------------------------------------------- */
+/* RESPONSIVE CSS (MOBILE ADJUSTMENTS) */
+/* ---------------------------------------------------- */
+@media(max-width:768px){
+  /* Header Fixes */
+  .menu-icon {
+    display: block; /* Show hamburger menu */
+  }
+  nav {
+    display: none; /* Hide nav by default */
+    width: 100%;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 10px;
+  }
+  nav.active {
+    display: flex; /* Show when active */
+  }
+  nav a, nav button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+  }
 
-        .social a {
-            display: inline-block;
-            margin: 15px;
-            font-size: 100px;
-            text-decoration: none;
-            transition: transform 0.3s;
-        }
+  /* Hero Section Fixes */
+  .hero {
+    height: auto;
+    padding: 40px 20px; /* Reduce padding */
+    width: 100%;
+  }
+  .hero h1 {
+    font-size: 28px;
+    margin-bottom: 30px; /* Fix huge gap */
+  }
+  .hero p {
+    font-size: 14px;
+    padding: 10px;
+  }
 
-        .social a:hover {
-            transform: scale(1.2);
-        }
+  /* Slider Fixes (Temple Gallery) */
+  .slides img {
+    width: 100%; /* Show 1 image at a time on mobile */
+    height: 250px; /* Reduced height from 400px to 250px */
+  }
 
-        .whatsapp { color: #25D366; }
-        .instagram { color: #E1306C; }
-        .youtube { color: #FF0000; }
+  /* Committee Gallery Fixes (Small Slider) */
+  .slider-track img {
+    width: 90px;  /* Reduced from 150px */
+    height: 90px; /* Reduced from 150px */
+    border: 2px solid white; /* Thinner border */
+  }
+
+  /* Video & Iframe Fixes */
+  iframe {
+    width: 100% !important; /* Force fit screen */
+    height: auto;
+    aspect-ratio: 16/9;
+  }
+
+  /* General Text */
+  .section h2 {
+    font-size: 22px;
+  }
+  
+  /* Address Section */
+  .map-address {
+    flex-direction: column;
+  }
+  .map-address .card {
+    flex: 1 1 auto;
+  }
+}
 
 </style>
 </head>
@@ -315,6 +373,7 @@ footer{
 <header>
   <h3><img src="LOGO.jpeg" alt="Temple Logo">Sri Sri Sri Pentlamma Ammavaru</h3>
   <div class="menu-icon" onclick="toggleNav()">☰</div>
+  
   <nav id="mainNav">
     <a href="#gallery">Gallery</a>
     <a href="#pooja">Poojas</a>
@@ -410,8 +469,6 @@ footer{
 
 
 
-<!-- circleCLE IMAGE SLIDER -->
-
 <section class="section" id="gallery">
   <h2 id="commitTitle">📸 Committee Gallery</h2>
 
@@ -424,8 +481,7 @@ footer{
 		<img src="CC5.jpeg">
 		
 
-        <!-- Duplicate for infinite scroll -->
-		<img src="CC21.jpeg">
+        <img src="CC21.jpeg">
 		<img src="CC20.jpeg">
         <img src="CC6.jpeg">
 
@@ -435,7 +491,6 @@ footer{
 
 <div class="slider1">
     <div class="slider-track">
-	<!-- Duplicate for infinite scroll -->
 	<img src="CC7.jpeg">
 	    <img src="CC8.jpeg">
 		<img src="CC22.jpeg">
@@ -449,8 +504,7 @@ footer{
 	
 	<div class="slider2">
     <div class="slider-track">
-	<!-- Duplicate for infinite scroll -->
-	 <img src="CC14.jpeg"> 
+	<img src="CC14.jpeg"> 
 	<img src="CC15.jpeg">
 		<img src="CC16.jpeg">
 		<img src="CC17.jpeg">
@@ -704,7 +758,7 @@ function toggleLang(){
   tel=!tel;
   document.getElementById("heroTitle").innerText=tel?"శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు ఆలయానికి స్వాగతం":"Welcome to Sri Sri Sri Pentlamma Ammavaru Temple";
   document.getElementById("galleryTitle").innerText=tel?"📸 ఆలయ గ్యాలరీ":"📸 Temple Gallery";
-  document.getElementById("commitTitle").innerText=tel?"📸  కమిటీ గ్యాలరీ":"📸 Commit Gallery";
+  document.getElementById("commitTitle").innerText=tel?"📸  కమిటీ గ్యాలరీ":"📸 Committee Gallery";
   document.getElementById("videoTitle").innerText=tel?"🎥 వీడియో గ్యాలరీ":"🎥 Video Gallery";
   document.getElementById("poojaTitle").innerText=tel?"📆 నిత్య పూజలు":"📆 Daily Pooja Schedule";
   document.getElementById("bookingTitle").innerText=tel?"🎫 సేవ బుకింగ్":"🎫 Seva Booking";
@@ -758,6 +812,13 @@ if(localStorage.getItem("admin")==="true"){
   document.getElementById("logoutBtn").style.display="inline";
   renderBookings();
 }
+
+/* AUTO-CLOSE SIDEBAR ON MOBILE */
+document.querySelectorAll('#mainNav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById("mainNav").classList.remove("active");
+  });
+});
 </script>
 </body>
 </html>
