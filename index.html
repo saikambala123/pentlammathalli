@@ -408,52 +408,6 @@ footer{
   opacity:0.8;
 }
 
-/* ── SCROLL-UP ENTRANCE ANIMATIONS ── */
-.animate-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1),
-              transform 0.8s cubic-bezier(0.22,1,0.36,1);
-}
-.animate-up.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-/* staggered delay for grid children */
-.animate-up:nth-child(1){ transition-delay:0s; }
-.animate-up:nth-child(2){ transition-delay:0.1s; }
-.animate-up:nth-child(3){ transition-delay:0.2s; }
-.animate-up:nth-child(4){ transition-delay:0.3s; }
-.animate-up:nth-child(5){ transition-delay:0.4s; }
-.animate-up:nth-child(6){ transition-delay:0.5s; }
-
-/* hero title floats in */
-.hero h1 {
-  animation: heroFloat 1.2s cubic-bezier(0.22,1,0.36,1) both;
-}
-@keyframes heroFloat {
-  from { opacity:0; transform:translateY(50px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-/* header slides down on load */
-header {
-  animation: headerDrop 0.7s cubic-bezier(0.22,1,0.36,1) both;
-}
-@keyframes headerDrop {
-  from { opacity:0; transform:translateY(-60px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-/* footer slides up on load */
-footer {
-  animation: footerRise 1s cubic-bezier(0.22,1,0.36,1) both;
-}
-@keyframes footerRise {
-  from { opacity:0; transform:translateY(40px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
 </style>
 </head>
 <body>
@@ -528,7 +482,7 @@ footer {
 సమీప రైల్వే స్టేషన్: తాడేపల్లిగూడం</p>-->
 </section> 
 
-<section class="section animate-up" id="gallery">
+<section class="section" id="gallery">
   <h2 id="galleryTitle">📸 Temple Gallery</h2>
   <div class="slider">
     <div class="slides" id="slides">
@@ -576,7 +530,7 @@ footer {
 
 
 
-<section class="section animate-up" id="gallery">
+<section class="section" id="gallery">
   <h2 id="commitTitle">📸 Committee Gallery</h2>
 
 <div class="slider1">
@@ -625,7 +579,7 @@ footer {
     </div>
 </div>
 
-<section class="section animate-up">
+<section class="section">
   <h2 id="videoTitle">🎥 Video Gallery</h2>
   <div class="grid video-grid">
     <div class="video-wrapper">
@@ -666,7 +620,7 @@ footer {
  
 </section>
 
-<section class="section animate-up" id="pooja">
+<section class="section" id="pooja">
   <h2 id="poojaTitle">📆 Daily Pooja Schedule</h2>
   <div class="grid" id="poojaList"></div>
   <div id="adminPanel" style="display:none; margin-top:30px;">
@@ -675,7 +629,7 @@ footer {
   </div>
 </section>
 
-<section class="section animate-up" id="booking">
+<section class="section" id="booking">
   <h2 id="bookingTitle">🎫 Seva Booking</h2>  
   <div class="card">
     <input id="name" placeholder="Your Name">
@@ -696,7 +650,7 @@ footer {
   <button class="primary" onclick="downloadPDF()">⬇ Download PDF</button>
 </section>
 
-<section class="section animate-up" id="donation">
+<section class="section" id="donation">
   <div class="donate">
     <h2 style="color:#fff" id="donateTitle">🙏 QR Code Donation</h2>
     <div class="grid">
@@ -708,7 +662,7 @@ footer {
   </div>
 </section>
 
-<section class="section animate-up" id="address">
+<section class="section" id="address">
   <h2 id="addressTitle">📍 Temple Address</h2>
   <div class="map-address">
     <div class="card">
@@ -731,13 +685,13 @@ footer {
   </div>
 </section>
 
-<section class="section animate-up" id="live">
+<section class="section" id="live">
   <h2 id="liveTitle">🎥 SOCIAL MEDIA CHANNELS </h2>
   
 </section>
 
 
-<div class="social-icons animate-up">
+<div class="social-icons">
 
 <a href="https://www.youtube.com/@pentlammatallicomiti2023" target="_blank" class="youtube">
 <i class="fab fa-youtube"></i> YouTube
@@ -907,21 +861,26 @@ function toggleDark(){
 }
 
 /* ── AUDIO ── */
-const audio        = document.getElementById("templeAudio");
-const historyAudio = document.getElementById("historyAudio");
-const audioBtn     = document.getElementById("audioBtn");
+const audio           = document.getElementById("templeAudio");
+const historyAudio    = document.getElementById("historyAudio");
+const audioBtn        = document.getElementById("audioBtn");
 const audioBtnHistory = document.getElementById("audioBtnHistory");
-const muteBtn      = document.getElementById("muteBtn");
+const muteBtn         = document.getElementById("muteBtn");
 
-/* Auto-play music on page load */
+/* Auto-play music on load */
 window.addEventListener('load', () => {
   audio.play().catch(() => {});
   audioBtn.innerText = "🔊 Pause Music";
 });
 
-/* Play / Pause background music */
+/* Play / Pause music — stops history if playing */
 function toggleAudio() {
   if (audio.paused) {
+    if (!historyAudio.paused) {
+      historyAudio.pause();
+      historyAudio.currentTime = 0;
+      audioBtnHistory.innerText = "📜 Play History";
+    }
     audio.play();
     audioBtn.innerText = "🔊 Pause Music";
   } else {
@@ -930,8 +889,14 @@ function toggleAudio() {
   }
 }
 
-/* Play / Pause history audio */
+/* Play History — blocked while music is playing */
 function toggleHistory() {
+  if (!audio.paused) {
+    const prev = audioBtnHistory.innerText;
+    audioBtnHistory.innerText = "⛔ Stop Music First";
+    setTimeout(() => { audioBtnHistory.innerText = prev; }, 1800);
+    return;
+  }
   if (historyAudio.paused) {
     historyAudio.play();
     audioBtnHistory.innerText = "⏸ Pause History";
@@ -951,17 +916,49 @@ function toggleMute() {
   muteBtn.innerText  = globalMuted ? "🔇 Unmute" : "🔈 Mute";
 }
 
-/* ── SCROLL-UP ANIMATIONS ── */
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target); // animate only once
-    }
-  });
-}, { threshold: 0.12 });
+/* ── CONTINUOUS LOOPING AUTO-SCROLL (starts after 3s) ── */
+let autoScrollRAF = null;
+let autoScrollActive = false;
+const SCROLL_SPEED = 0.6; // px per frame — increase for faster scroll
 
-document.querySelectorAll('.animate-up').forEach(el => observer.observe(el));
+function autoScrollLoop() {
+  if (!autoScrollActive) return;
+  const atBottom =
+    window.innerHeight + window.scrollY >= document.body.scrollHeight - 2;
+  if (atBottom) {
+    /* Instantly jump back to top, then continue */
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  } else {
+    window.scrollBy(0, SCROLL_SPEED);
+  }
+  autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+}
+
+/* Pause auto-scroll when user manually scrolls, resume after 4s of inactivity */
+let userScrollTimer = null;
+window.addEventListener('wheel', () => {
+  if (!autoScrollActive) return;
+  cancelAnimationFrame(autoScrollRAF);
+  clearTimeout(userScrollTimer);
+  userScrollTimer = setTimeout(() => {
+    autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+  }, 4000);
+}, { passive: true });
+
+window.addEventListener('touchmove', () => {
+  if (!autoScrollActive) return;
+  cancelAnimationFrame(autoScrollRAF);
+  clearTimeout(userScrollTimer);
+  userScrollTimer = setTimeout(() => {
+    autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+  }, 4000);
+}, { passive: true });
+
+/* Kick off after 3 seconds */
+setTimeout(() => {
+  autoScrollActive = true;
+  autoScrollRAF = requestAnimationFrame(autoScrollLoop);
+}, 3000);
 
 /* ADMIN LOGIN */
 function adminLogin(){
