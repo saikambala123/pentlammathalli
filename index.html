@@ -867,20 +867,27 @@ const audioBtn        = document.getElementById("audioBtn");
 const audioBtnHistory = document.getElementById("audioBtnHistory");
 const muteBtn         = document.getElementById("muteBtn");
 
-/* Auto-play music on load */
+/* ── Scroll to very top on every page load / refresh ── */
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
 window.addEventListener('load', () => {
+  window.scrollTo({ top: 0, behavior: 'instant' });
   audio.play().catch(() => {});
   audioBtn.innerText = "🔊 Pause Music";
 });
 
-/* Play / Pause music — stops history if playing */
+/* Play / Pause music — always stops history first */
 function toggleAudio() {
   if (audio.paused) {
-    if (!historyAudio.paused) {
-      historyAudio.pause();
-      historyAudio.currentTime = 0;
-      audioBtnHistory.innerText = "📜 Play History";
-    }
+    /* Stop history if running */
+    historyAudio.pause();
+    historyAudio.currentTime = 0;
+    audioBtnHistory.innerText = "📜 Play History";
+    /* Start music */
     audio.play();
     audioBtn.innerText = "🔊 Pause Music";
   } else {
@@ -889,15 +896,13 @@ function toggleAudio() {
   }
 }
 
-/* Play History — blocked while music is playing */
+/* Play / Pause history — always stops music first */
 function toggleHistory() {
-  if (!audio.paused) {
-    const prev = audioBtnHistory.innerText;
-    audioBtnHistory.innerText = "⛔ Stop Music First";
-    setTimeout(() => { audioBtnHistory.innerText = prev; }, 1800);
-    return;
-  }
   if (historyAudio.paused) {
+    /* Stop music if running */
+    audio.pause();
+    audioBtn.innerText = "🔈 Play Music";
+    /* Start history */
     historyAudio.play();
     audioBtnHistory.innerText = "⏸ Pause History";
   } else {
