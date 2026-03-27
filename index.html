@@ -381,21 +381,18 @@ footer{
 .social-icons{
   display:flex;
   justify-content:center;
-  gap:12px;
-  flex-wrap:wrap;
-  padding:10px;
+  gap:20px;
 }
 
 .social-icons a{
   text-decoration:none;
-  font-size:14px;
-  padding:10px 12px;
-  border-radius:10px;
+  font-size:16px;
+  padding:10px 15px;
+  border-radius:8px;
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:8px;
   color:white;
-  white-space:nowrap;
 }
 
 .youtube{ background:red; }
@@ -409,19 +406,6 @@ footer{
 
 .social-icons a:hover{
   opacity:0.8;
-}
-
-
-@media(max-width:768px){
-  .social-icons{
-    flex-direction:column;
-    align-items:center;
-  }
-  .social-icons a{
-    width:90%;
-    justify-content:center;
-    font-size:16px;
-  }
 }
 
 </style>
@@ -692,16 +676,10 @@ footer{
 తాడేపల్లిగూడం మరియు పరిసర ప్రాంతాల నుండి రోడ్డు మార్గం ద్వారా సులభంగా చేరుకోవచ్చు.
 
 </p>
-	<h1>🛕 దేవాలయ సమయాలు</h1>
-
-    <div class="time">🌅 ఉదయం తెరువు: <span class="highlight">6:00 AM</span></div>
-    <div class="time">🔔 పూజ సమయం: <span class="highlight">7:00 AM - 11:00 AM</span></div>
-    <div class="time">🌇 సాయంత్రం తెరువు: <span class="highlight">4:30 PM</span></div>
-    <div class="time">🪔 సాయంత్రం పూజ: <span class="highlight">6:00 PM - 8:00 PM</span></div>
-    <div class="time">🌙 మూసివేత: <span class="highlight">9:00 PM</span></div>
+	  
     </div>
     <div class="map-container card">
-      <iframe width="560" height= "315" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1160.0122803029424!2d81.51619268354347!3d16.7718887600723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37b5235c738925%3A0x55b23b72c5371a05!2sKaspapentapadu!5e0!3m2!1sen!2sin!4v1768298527950!5m2!1sen!2sin" 
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1160.0122803029424!2d81.51619268354347!3d16.7718887600723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a37b5235c738925%3A0x55b23b72c5371a05!2sKaspapentapadu!5e0!3m2!1sen!2sin!4v1768298527950!5m2!1sen!2sin" 
       allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
@@ -767,10 +745,9 @@ function toggleNav(){
 
 /* POOJA */
 let poojas=JSON.parse(localStorage.getItem("poojas"))||[
- "Deeparadhana – 6:00 AM",
-  "Alankarana – 8:00 AM",
-  "Achana – 9:00 AM",
-  "Kumkuma Archana - on special days"
+  "Suprabhatam – 5:30 AM",
+  "Kumkuma Archana – 9:00 AM",
+  "Archana – 8:00 AM"
 ];
 
 function renderPoojas(){
@@ -866,6 +843,7 @@ function downloadPDF(){
 let tel=false;
 function toggleLang(){
   tel=!tel;
+  document.getElementById("heroTitle").innerText=tel?"శ్రీ శ్రీ శ్రీ పెంట్లమ్మ అమ్మవారు ఆలయానికి స్వాగతం":"Welcome to Sri Sri Sri Pentlamma Ammavaru Temple";
   document.getElementById("galleryTitle").innerText=tel?"📸 ఆలయ గ్యాలరీ":"📸 Temple Gallery";
   document.getElementById("commitTitle").innerText=tel?"📸  కమిటీ గ్యాలరీ":"📸 Committee Gallery";
   document.getElementById("videoTitle").innerText=tel?"🎥 వీడియో గ్యాలరీ":"🎥 Video Gallery";
